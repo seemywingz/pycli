@@ -3,18 +3,12 @@
 # File: picli
 
 import argparse
-import subprocess
 from utils.ip import scan_ips
-import game_of_life
+from GameOfLife import GameOfLife
 
 
 def main():
     parser = argparse.ArgumentParser(description="Python CLI Tools")
-    # parser.add_argument(
-    #     "--scan",
-    #     action="store_true",
-    #     help="Scan for active hosts on the local network",
-    # )
     subparser = parser.add_subparsers(dest="command")
 
     subparser.add_parser(
@@ -27,7 +21,7 @@ def main():
     gol.add_argument(
         "--width",
         type=int,
-        default=10,
+        default=30,
         help="Width of the game board",
     )
     gol.add_argument(
@@ -36,6 +30,18 @@ def main():
         default=10,
         help="Height of the game board",
     )
+    gol.add_argument(
+        "--generations",
+        type=int,
+        default=300,
+        help="Number of generations to simulate",
+    )
+    gol.add_argument(
+        "--loop",
+        action="store_true",
+        help="Loop the simulation indefinitely",
+        default=False,
+    )
 
     args = parser.parse_args()
 
@@ -43,7 +49,8 @@ def main():
         if args.command == "scan-ip":
             scan_ips()
         if args.command == "game-of-life":
-            game_of_life.start(args.width, args.height)
+            gameOfLife = GameOfLife(args.width, args.height, args.generations)
+            gameOfLife.start(args.loop)
     except KeyboardInterrupt:
         print("\nOperation cancelled by user.")
 
