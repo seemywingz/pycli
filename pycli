@@ -1,0 +1,21 @@
+#!/usr/bin/env pyenv exec python3
+import argparse
+from utils.ip import get_local_ip_address, get_router_ip_address
+
+
+def main():
+    parser = argparse.ArgumentParser(description="CLI with Subcommands")
+    # subparsers = parser.add_subparsers(
+    #     dest="command", required=True, help="Commands"
+    # )
+    args = parser.parse_args()
+
+    ip = get_local_ip_address()
+    print("Local IP Address:", ip)
+
+    route = get_router_ip_address()
+    print("Router IP Address:", route)
+
+
+if __name__ == "__main__":
+    main()
