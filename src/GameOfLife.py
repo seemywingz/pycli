@@ -59,9 +59,9 @@ class GameOfLife:
                     if neighbors == 3:
                         self.setCell(x, y, self.activeCell)
         self.currentGen += 1
-        # if curGrid == self.grid:
-        #     print("Stable configuration found. Stopping...")
-        #     self.stop = True
+        if curGrid == self.grid:
+            print("Stable configuration found. Stopping...")
+            self.stop = True
 
     def start(self, loop=False):
         self.randomizeGrid()

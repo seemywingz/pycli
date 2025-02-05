@@ -7,17 +7,8 @@ from utils.ip import scan_ips
 from GameOfLife import GameOfLife
 
 
-def main():
-    parser = argparse.ArgumentParser(description="Python CLI Tools")
-    subparser = parser.add_subparsers(dest="command")
-
-    subparser.add_parser(
-        "scan-ip", help="Scan for active hosts on the local network"
-    )
-
-    gol = subparser.add_parser(
-        "game-of-life", help="Run Conway's Game of Life"
-    )
+def cmd_game_of_life(parser):
+    gol = parser.add_parser("game-of-life", help="Run Conway's Game of Life")
     gol.add_argument(
         "--width",
         type=int,
@@ -42,6 +33,15 @@ def main():
         help="Loop the simulation indefinitely",
         default=False,
     )
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Python CLI Tools")
+    subparser = parser.add_subparsers(dest="command")
+    subparser.add_parser(
+        "scan-ip", help="Scan for active hosts on the local network"
+    )
+    cmd_game_of_life(subparser)
 
     args = parser.parse_args()
 
