@@ -87,3 +87,15 @@ def scan_hosts():
             print(f"Error scanning {ip}: {e}")
 
     return active_hosts
+
+
+def scan_ips():
+    ip = get_local_ip()
+    print("Local IP Address:", ip)
+
+    router = get_router_ip()
+    print("Router IP Address:", router)
+    hosts = scan_hosts()
+    print("Active Hosts:")
+    for host in hosts:
+        print(host)
