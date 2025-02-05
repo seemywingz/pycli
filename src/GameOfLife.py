@@ -70,8 +70,8 @@ class GameOfLife:
             self.printGrid()
             self.applyRules()
             time.sleep(0.05)
-            # if not loop or not self.stop:
-            #     self.stop = self.currentGen >= self.generations
+            if not loop or not self.stop:
+                self.stop = self.currentGen >= self.generations
 
 
 def main():
