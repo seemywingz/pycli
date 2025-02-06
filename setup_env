@@ -14,6 +14,12 @@ else
     USE_PYENV=true
 fi
 
+# Create python_version.txt if it doesn't exist
+if [ ! -f "$PYTHON_VERSION_FILE" ]; then
+    echo "Creating $PYTHON_VERSION_FILE..."
+    python --version >"$PYTHON_VERSION_FILE"
+fi
+
 # Determine the correct Python version
 if [ -f "$PYTHON_VERSION_FILE" ]; then
     PYTHON_VERSION=$(cat "$PYTHON_VERSION_FILE")
@@ -24,10 +30,10 @@ if [ -f "$PYTHON_VERSION_FILE" ]; then
         fi
         pyenv local "$PYTHON_VERSION"
     fi
-    PYTHON_EXECUTABLE="python3"
+    PYTHON_EXECUTABLE="python"
 else
     echo "Warning: $PYTHON_VERSION_FILE not found. Using system Python."
-    PYTHON_EXECUTABLE="python3"
+    PYTHON_EXECUTABLE="python"
 fi
 
 # Create virtual environment if missing
@@ -43,6 +49,12 @@ source "$VENV_DIR/bin/activate"
 # Ensure pip is up-to-date
 echo "Upgrading pip..."
 python -m pip install --upgrade pip
+
+# Create requirements.txt if it doesn't exist
+if [ ! -f "$REQUIREMENTS_FILE" ]; then
+    echo "Creating $REQUIREMENTS_FILE and populating with current packages..."
+    pip freeze >"$REQUIREMENTS_FILE"
+fi
 
 # Install or update dependencies if requirements.txt exists
 if [ -f "$REQUIREMENTS_FILE" ]; then
